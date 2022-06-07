@@ -1,0 +1,4 @@
+[default]
+
+FAUNA_SECRET = "SECRET"
+
