@@ -33,6 +33,18 @@ def main():
     create_collection(client, {"name": "houses"})
     create_index(client, {"name": "all_houses", "source": q.collection("houses")})
 
+    create_index(client, {"name": "all_houses_by_city", "source": q.collection("houses"),
+                          "terms": [{"field": ["data", "city"]}]})
+
+    create_index(client, {"name": "all_houses_cities", "source": q.collection("houses"),
+                          "values": [{"field": ["data", "city"]}]})
+
+    create_index(client, {"name": "all_houses_cities_by_room_color",
+                          "source": q.collection("houses"),
+                          "values": [{"field": ["data", "city"]}],
+                          "terms": [{"field": ["data", "rooms", "wall_color"]}]
+                          })
+
     # Delete all previous houses
     client.query(
         q.map_(
